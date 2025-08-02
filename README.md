@@ -1,6 +1,40 @@
 # 🎯 Fundraising Hub
 
-A modern, full-stack fundraising platform built with React and Node.js featuring real-time donation tracking, gamification elements, and comprehensive analytics.
+A modern, full-stack fundraising pla3. **Set up M4. **Install backend dependencies**
+   ```bash
+   cd backend
+   npm install
+   ```
+
+5. **Install frontend dependencies**
+   ```bash
+   cd ../frontend
+   npm install
+   ```
+
+6. **Start the backend server**
+   ```bash
+   cd ../backend
+   npm start
+   ```
+   Backend will run on `http://localhost:5000` and automatically:
+   - Connect to MongoDB
+   - Seed sample data if database is empty
+   - Display connection status
+
+7. **Start the frontend development server**
+   # Option 1: Install MongoDB locally
+   # Download from: https://www.mongodb.com/try/download/community
+   # Start MongoDB service
+   mongod
+   
+   # Option 2: Use MongoDB Atlas (cloud)
+   # Create account at: https://www.mongodb.com/atlas
+   # Create .env file in backend folder with your connection string
+   echo "MONGODB_URI=your-connection-string" > backend/.env
+   ```
+
+4. **Install backend dependencies**form built with React and Node.js featuring real-time donation tracking, gamification elements, and comprehensive analytics.
 
 ![Fundraising Hub Demo](https://img.shields.io/badge/Demo-Live-brightgreen)
 ![React](https://img.shields.io/badge/React-18+-blue)
@@ -46,6 +80,9 @@ A modern, full-stack fundraising platform built with React and Node.js featuring
 ### Prerequisites
 - Node.js 16+ installed
 - npm or yarn package manager
+- **MongoDB** (Local installation or MongoDB Atlas account)
+  - [MongoDB Community Edition](https://www.mongodb.com/try/download/community) for local development
+  - OR [MongoDB Atlas](https://www.mongodb.com/atlas) for cloud database (free tier available)
 
 ### Installation
 
@@ -90,6 +127,9 @@ A modern, full-stack fundraising platform built with React and Node.js featuring
 fundraising-hub/
 ├── backend/
 │   ├── server.js          # Express server with API endpoints
+│   ├── models.js          # MongoDB/Mongoose data models
+│   ├── dbUtils.js         # Database utility functions
+│   ├── .env.example       # Environment variables template
 │   ├── package.json       # Backend dependencies
 │   └── node_modules/      # Backend packages
 ├── frontend/
@@ -161,6 +201,8 @@ const donation = await fetch('http://localhost:5000/api/donations/add', {
 ### Backend
 - **Node.js** - JavaScript runtime environment
 - **Express.js** - Web framework for API development
+- **MongoDB** - NoSQL database for data persistence
+- **Mongoose** - MongoDB object modeling for Node.js
 - **CORS** - Cross-origin resource sharing middleware
 
 ### Development Tools
