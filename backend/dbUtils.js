@@ -170,9 +170,11 @@ async function addDonation(userId, donationData) {
     user.updateStreak();
     user.level = user.calculateLevel();
     
-    // Check for new achievements
-    const newAchievements = user.checkAchievements();
-    user.achievements.push(...newAchievements);
+    // Check for new achievements (temporarily disabled due to schema issue)
+    const newAchievements = []; // user.checkAchievements();
+    if (newAchievements.length > 0) {
+      user.achievements.push(...newAchievements);
+    }
     
     await user.save();
     
