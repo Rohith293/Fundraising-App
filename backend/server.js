@@ -18,25 +18,75 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection
+// MongoDB connection with fallback
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fundraising-hub';
+let mongoConnected = false;
 
 mongoose.connect(MONGODB_URI)
   .then(async () => {
     console.log('✅ Connected to MongoDB');
+    mongoConnected = true;
+    console.log(`📊 Using MongoDB database: ${MONGODB_URI}`);
     // Seed database with sample data if empty
     await seedDatabase();
   })
   .catch((error) => {
     console.error('❌ MongoDB connection error:', error);
-    console.log('💡 Make sure MongoDB is running locally or provide a valid MONGODB_URI');
+    console.log('💡 Running in demo mode with in-memory data');
+    mongoConnected = false;
+    // Initialize demo data
+    initializeDemoData();
   });
 
 // Default user ID for demo (in real app, this would come from authentication)
 let defaultUserId = null;
 
+// Demo data for when MongoDB is not available
+let demoUser = null;
+let demoDonations = [];
+let demoStats = null;
+
+// Initialize demo data
+function initializeDemoData() {
+  demoUser = {
+    _id: 'demo-user-123',
+    name: 'Alex Johnson',
+    referralCode: 'ALEX2024',
+    totalRaised: 2850,
+    currentGoal: 5000,
+    level: 'Rising Star',
+    streak: 12,
+    donationsCount: 15,
+    achievements: [
+      { name: 'First 100', type: 'bronze', dateEarned: new Date() },
+      { name: 'Rising Star', type: 'silver', dateEarned: new Date() },
+      { name: 'Week Warrior', type: 'bronze', dateEarned: new Date() }
+    ]
+  };
+
+  demoDonations = [
+    { amount: 50, date: new Date('2024-01-15'), campaign: 'Education Fund' },
+    { amount: 100, date: new Date('2024-01-20'), campaign: 'Healthcare Initiative' },
+    { amount: 75, date: new Date('2024-01-25'), campaign: 'Environmental Project' }
+  ];
+
+  demoStats = {
+    totalRaised: 15420,
+    totalDonors: 245,
+    activeCampaigns: 8,
+    avgDonation: 62.9
+  };
+
+  defaultUserId = demoUser._id;
+  console.log('✅ Demo data initialized');
+}
+
 // Initialize default user
 async function initializeDefaultUser() {
+  if (!mongoConnected) {
+    return demoUser;
+  }
+
   try {
     let user = await User.findOne({ name: 'Alex Johnson' });
     
@@ -74,6 +124,21 @@ async function initializeDefaultUser() {
 // Get user data
 app.get('/api/user', async (req, res) => {
   try {
+    if (!mongoConnected) {
+      // Return demo data
+      const response = {
+        name: demoUser.name,
+        totalDonations: demoUser.totalRaised,
+        goal: demoUser.currentGoal,
+        level: demoUser.level,
+        streak: demoUser.streak,
+        achievements: demoUser.achievements,
+        referralCode: demoUser.referralCode,
+        donationsCount: demoUser.donationsCount
+      };
+      return res.json(response);
+    }
+
     if (!defaultUserId) {
       await initializeDefaultUser();
     }
@@ -110,6 +175,19 @@ app.get('/api/user', async (req, res) => {
 // Get leaderboard
 app.get('/api/leaderboard', async (req, res) => {
   try {
+    if (!mongoConnected) {
+      // Return demo leaderboard
+      const demoLeaderboard = [
+        { name: 'Alex Johnson', totalRaised: 2850, totalDonations: 2850, level: 'Rising Star', achievements: 3, donationsCount: 15 },
+        { name: 'Sarah Connor', totalRaised: 3420, totalDonations: 3420, level: 'Champion', achievements: 5, donationsCount: 18 },
+        { name: 'Mike Rodriguez', totalRaised: 2100, totalDonations: 2100, level: 'Supporter', achievements: 2, donationsCount: 12 },
+        { name: 'Emily Chen', totalRaised: 1850, totalDonations: 1850, level: 'Supporter', achievements: 2, donationsCount: 8 },
+        { name: 'David Wilson', totalRaised: 4200, totalDonations: 4200, level: 'Champion', achievements: 6, donationsCount: 22 }
+      ].sort((a, b) => b.totalRaised - a.totalRaised);
+      
+      return res.json(demoLeaderboard);
+    }
+
     const leaderboard = await getLeaderboard(10);
     
     // Format for compatibility with frontend
@@ -132,6 +210,18 @@ app.get('/api/leaderboard', async (req, res) => {
 // Get platform statistics
 app.get('/api/stats', async (req, res) => {
   try {
+    if (!mongoConnected) {
+      // Return demo stats
+      return res.json({
+        totalUsers: 245,
+        totalRaised: demoStats.totalRaised,
+        averagePerUser: demoStats.avgDonation,
+        topDonation: 500,
+        thisWeek: 1250,
+        thisMonth: 4680
+      });
+    }
+
     await updatePlatformStats();
     const stats = await Stats.findOne().sort({ lastUpdated: -1 });
     
