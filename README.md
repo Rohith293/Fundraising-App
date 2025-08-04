@@ -48,7 +48,47 @@ A modern, full-stack fundraising platform built with React and Node.js featuring
 - **Environment Configuration** - Easy setup for development and production
 - **Clean Code Structure** - Well-organized components and utilities
 
-## 🚀 Quick Start
+## � Screenshots
+
+### 🔐 Login Screen
+*Simple and clean authentication interface*
+
+![Login Screen](screenshots/login.png)
+
+### 🏠 Dashboard
+*Main user dashboard with personal statistics and quick actions*
+
+![Dashboard](screenshots/dashboard.png)
+
+### 📊 Analytics Page
+*Comprehensive platform statistics and insights*
+
+![Analytics](screenshots/analytics.png)
+
+### 🎯 Goal Setting
+*Interactive goal management with progress visualization*
+
+![Goal Setting](screenshots/goal-setting.png)
+
+### 💰 Donation Simulator
+*Test donation functionality with realistic simulation*
+
+![Donation Simulator](screenshots/donation-simulator.png)
+
+### 🏆 Leaderboard
+*Competitive rankings with user achievements*
+
+![Leaderboard](screenshots/leaderboard.png)
+
+### 📱 Responsive Design
+*Mobile-friendly interface across all devices*
+
+<div align="center">
+  <img src="screenshots/mobile-dashboard.png" alt="Mobile Dashboard" width="300"/>
+  <img src="screenshots/mobile-leaderboard.png" alt="Mobile Leaderboard" width="300"/>
+</div>
+
+## �🚀 Quick Start
 
 ### Prerequisites
 - Node.js 16+ installed
