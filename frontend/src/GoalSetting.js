@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import API_BASE_URL from './config';
 
 const GoalSetting = ({ user, onBack, onUpdateGoal }) => {
   const [newGoal, setNewGoal] = useState(user.goal || 2500);
@@ -8,7 +7,7 @@ const GoalSetting = ({ user, onBack, onUpdateGoal }) => {
   const handleSaveGoal = async () => {
     setSaving(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/user/goal`, {
+      const response = await fetch('http://localhost:5000/api/user/goal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ goal: newGoal })

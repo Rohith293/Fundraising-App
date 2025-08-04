@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import API_BASE_URL from './config';
 
 const Analytics = ({ onBack }) => {
   const [stats, setStats] = useState(null);
@@ -8,8 +7,8 @@ const Analytics = ({ onBack }) => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${API_BASE_URL}/api/stats`).then(res => res.json()),
-      fetch(`${API_BASE_URL}/api/donations/history`).then(res => res.json())
+      fetch('http://localhost:5000/api/stats').then(res => res.json()),
+      fetch('http://localhost:5000/api/donations/history').then(res => res.json())
     ]).then(([statsData, historyData]) => {
       setStats(statsData);
       setHistory(historyData);
