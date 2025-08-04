@@ -53,29 +53,3 @@ This folder contains screenshots for the Fundraising Hub application. Below are 
 5. **Browser**: Use Chrome or Edge for consistent appearance
 6. **Window Size**: Desktop screenshots at 1200x800px minimum
 
-## How to Take Screenshots:
-
-### For Desktop:
-1. Open your application in the browser
-2. Navigate to each page
-3. Use browser developer tools to set consistent window size
-4. Take screenshot (Windows: Win+Shift+S, Mac: Cmd+Shift+4)
-5. Save as PNG in this folder with exact filename
-
-### For Mobile:
-1. Open browser developer tools (F12)
-2. Click device toggle (mobile icon)
-3. Select iPhone or Android device
-4. Navigate to pages and screenshot
-5. Save with mobile- prefix
-
-## After Adding Screenshots:
-
-1. Verify all image files are in this folder
-2. Check that image paths in README.md are correct
-3. Test that images display properly on GitHub
-4. Commit and push the screenshots to the repository
-
----
-
-**Ready to showcase your amazing fundraising platform! 📸✨**
