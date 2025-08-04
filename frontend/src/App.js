@@ -6,6 +6,7 @@ import Leaderboard from './Leaderboard';
 import Analytics from './Analytics';
 import GoalSetting from './GoalSetting';
 import DonationSimulator from './DonationSimulator';
+import API_BASE_URL from './config';
 import './App.css';
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
   // Fetch user data when needed
   useEffect(() => {
     if (page === 'dashboard' || page === 'goals' || page === 'simulator') {
-      fetch('http://localhost:5000/api/user')
+      fetch(`${API_BASE_URL}/api/user`)
         .then(res => res.json())
         .then(data => setUser({ ...data, name: name || data.name }));
     }

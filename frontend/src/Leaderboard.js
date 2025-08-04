@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import API_BASE_URL from './config';
 
 const Leaderboard = ({ onBack }) => {
-  const [data, setData] = useState([]);
+  const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetch(`${API_BASE_URL}/api/leaderboard`)
+      .then(res => res.json())
+      .then(data => {
+        setLeaderboard(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching leaderboard:', error);
+        setLoading(false);
+      });
+  }, []);
     fetch('http://localhost:5000/api/leaderboard')
       .then(res => res.json())
       .then(data => {

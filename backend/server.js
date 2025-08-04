@@ -12,10 +12,17 @@ const {
 } = require('./dbUtils');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://your-app.netlify.app',
+    /https:\/\/.*\.netlify\.app$/
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB connection

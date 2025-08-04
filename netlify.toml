@@ -1,0 +1,14 @@
+# Netlify configuration for React frontend
+[build]
+  base = "frontend"
+  publish = "frontend/build"
+  command = "npm run build"
+
+[build.environment]
+  REACT_APP_API_URL = "https://your-backend-app.herokuapp.com"
+
+# Redirect all routes to index.html for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

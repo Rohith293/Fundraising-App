@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from './config';
 
 const DonationSimulator = ({ onBack, onDonationAdded }) => {
   const [amount, setAmount] = useState('');
@@ -7,7 +8,7 @@ const DonationSimulator = ({ onBack, onDonationAdded }) => {
   const [recentDonations, setRecentDonations] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/donations/history')
+    fetch(`${API_BASE_URL}/api/donations/history`)
       .then(res => res.json())
       .then(data => setRecentDonations(data.slice(0, 5)));
   }, []);
@@ -15,7 +16,7 @@ const DonationSimulator = ({ onBack, onDonationAdded }) => {
   const addDonation = async (donationAmount, donationDonor) => {
     setAdding(true);
     try {
-      const response = await fetch('http://localhost:5000/api/donations/add', {
+      const response = await fetch(`${API_BASE_URL}/api/donations/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -31,7 +32,7 @@ const DonationSimulator = ({ onBack, onDonationAdded }) => {
         setDonor('');
         
         // Refresh recent donations
-        fetch('http://localhost:5000/api/donations/history')
+        fetch(`${API_BASE_URL}/api/donations/history`)
           .then(res => res.json())
           .then(data => setRecentDonations(data.slice(0, 5)));
           
